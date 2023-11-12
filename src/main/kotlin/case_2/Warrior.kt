@@ -1,32 +1,23 @@
 package case_2
 
-class Warrior(override val name: String, private val attackPower: Int): ICharacter {
-    private var health: Int = 100
+class Warrior: ICharacter{
+    override var health: Int = 100
+    override val damage: Int = 20
+    override val defend: Int = 15
 
     override fun attack(target: ICharacter) {
-        val damage = attackPower
-        println("$name attacks ${target.name} with $damage damage")
-        target.defend(damage)
+        val damageDealt = damage - target.defend
+        target.health -= damageDealt
+        println("Warrior swings a heavy sword for $damageDealt damage!")
     }
 
-    override fun defend(damage: Int) {
-        var actualDamage = damage
-        actualDamage -= 10
-
-        println("$name received $actualDamage damage")
-        val newHealth = getHealth() - actualDamage
-        setHealth(newHealth)
-
-        if(newHealth <= 0){
-            println("$name has been defeated")
-        }
+    override fun defend(attackDamage: Int) {
+        val damageBlocked = minOf(defend, attackDamage)
+        health -= attackDamage - damageBlocked
+        println("Warrior use defends, blocking $damageBlocked damage!")
     }
 
-    override fun getHealth(): Int {
-        return health
-    }
-
-    override fun setHealth(health: Int){
-        this.health = if (health < 0) 0 else health
+    override fun getHealth() {
+        println("Warrior current health is $health")
     }
 }

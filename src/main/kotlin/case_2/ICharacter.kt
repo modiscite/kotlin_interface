@@ -1,9 +1,11 @@
 package case_2
 
 interface ICharacter {
-    val name: String
+    var health: Int
+    val damage: Int
+    val defend: Int
+
     fun attack(target: ICharacter)
-    fun defend(damage: Int)
-    fun getHealth(): Int
-    fun setHealth(health: Int)
+    fun defend(attackDamage: Int)
+    fun getHealth()
 }
